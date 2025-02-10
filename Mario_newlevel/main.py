@@ -99,26 +99,27 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = off_y + y * TILE_SIZE + offset_y
 
     def move(self, dx, dy, level_map):
-        new_x = self.x + dx
-        new_y = self.y + dy
-        if 0 <= new_y < len(level_map) and 0 <= new_x < len(level_map[0]):
-            if level_map[new_y][new_x] != "#":
-                self.x = new_x
-                self.y = new_y
-                offset_x = (TILE_SIZE - self.hero_width) // 2
-                offset_y = (TILE_SIZE - self.hero_height) // 2
-                self.rect.x = self.off_x + self.x * TILE_SIZE + offset_x
-                self.rect.y = self.off_y + self.y * TILE_SIZE + offset_y
+        map_width = len(level_map[0])
+        map_height = len(level_map)
+        new_x = (self.x + dx) % map_width
+        new_y = (self.y + dy) % map_height
+        if level_map[new_y][new_x] != "#":
+            self.x = new_x
+            self.y = new_y
+            offset_x = (TILE_SIZE - self.hero_width) // 2
+            offset_y = (TILE_SIZE - self.hero_height) // 2
+            self.rect.x = self.off_x + self.x * TILE_SIZE + offset_x
+            self.rect.y = self.off_y + self.y * TILE_SIZE + offset_y
 
 
 def generate_level(level_map):
     all_sprites = pygame.sprite.Group()
     tiles_group = pygame.sprite.Group()
     player_group = pygame.sprite.Group()
-    level_width = len(level_map[0]) * TILE_SIZE
-    level_height = len(level_map) * TILE_SIZE
-    off_x = (WIDTH - level_width) // 2
-    off_y = (HEIGHT - level_height) // 2
+    level_width_pixels = len(level_map[0]) * TILE_SIZE
+    level_height_pixels = len(level_map) * TILE_SIZE
+    off_x = (WIDTH - level_width_pixels) // 2
+    off_y = (HEIGHT - level_height_pixels) // 2
     player = None
     for y, row in enumerate(level_map):
         for x, cell in enumerate(row):
@@ -126,7 +127,7 @@ def generate_level(level_map):
             if cell == "@":
                 player = Player(x, y, player_group, off_x, off_y)
     all_sprites.add(tiles_group, player_group)
-    return player, tiles_group, player_group, all_sprites
+    return player, tiles_group, player_group, all_sprites, level_width_pixels, level_height_pixels
 
 
 class Camera:
@@ -147,9 +148,7 @@ def main():
     start_screen(screen, clock)
     filename = input("Введите имя файла с уровнем: ")
     level_map = load_level(filename)
-    screen.fill((0, 0, 0))
-    pygame.display.flip()
-    player, tiles_group, player_group, all_sprites = generate_level(level_map)
+    player, tiles_group, player_group, all_sprites, level_width_pixels, level_height_pixels = generate_level(level_map)
     camera = Camera()
     running = True
     while running:
@@ -168,7 +167,11 @@ def main():
         camera.update(player)
         screen.fill((0, 0, 0))
         for sprite in all_sprites:
-            screen.blit(sprite.image, camera.apply(sprite.rect))
+            base_rect = camera.apply(sprite.rect)
+            for i in (-1, 0, 1):
+                for j in (-1, 0, 1):
+                    pos = base_rect.move(i * level_width_pixels, j * level_height_pixels)
+                    screen.blit(sprite.image, pos)
         pygame.display.flip()
         clock.tick(FPS)
     terminate()
