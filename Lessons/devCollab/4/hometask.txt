@@ -1,0 +1,8 @@
+Отличия между ветками master и demo:
+- В ветке master присутствуют объединённые изменения из веток boots_buttons и hat, которые отсутствуют в ветке demo.
+
+Список коммитов:
+- Initial commit
+- Added boots_buttons features
+- Merge branch 'hat'
+- Final merge to master
