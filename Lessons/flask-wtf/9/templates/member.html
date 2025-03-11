@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ chosen.name }} {{ chosen.surname }}</h2>
+<img src="{{ url_for('static', filename='images/' ~ chosen.photo) }}" alt="photo" style="max-width: 200px;">
+<ul>
+{% for prof in chosen.professions|sort %}
+    <li>{{ prof }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

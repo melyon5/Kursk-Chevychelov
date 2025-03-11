@@ -1,0 +1,6 @@
+.emblem {
+    width: 300px;
+    height: 100px;
+    background: url("../images/emblem.png") no-repeat center/contain;
+    margin-bottom: 10px;
+}

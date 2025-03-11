@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Аварийный доступ</h2>
+<div class="emblem"></div>
+<form method="post">
+    <label>Id астронавта</label>
+    <input type="text" name="astronaut_id">
+    <label>Пароль астронавта</label>
+    <input type="password" name="astronaut_pass">
+    <label>Id капитана</label>
+    <input type="text" name="captain_id">
+    <label>Пароль капитана</label>
+    <input type="password" name="captain_pass">
+    <button type="submit">Доступ</button>
+</form>
+{% endblock %}
