@@ -1,21 +1,23 @@
-import json
-import random
-import os
-from flask import Flask, render_template
+import sqlalchemy
+from sqlalchemy import Column, Integer, String
+from data.db_session import SqlAlchemyBase
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
-app = Flask(__name__)
 
-@app.route('/')
-@app.route('/index')
-def index():
-    return render_template('base.html', title='Mars One')
+class User(SqlAlchemyBase, UserMixin):
+    __tablename__ = 'users'
 
-@app.route('/member')
-def member():
-    with open(os.path.join('templates', 'crew.json'), 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    chosen = random.choice(data)
-    return render_template('member.html', chosen=chosen, title='Mars One')
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String, nullable=False)
+    email = Column(String, unique=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
 
-if __name__ == '__main__':
-    app.run(port=8080)
+    def set_password(self, password: str) -> None:
+        self.hashed_password = generate_password_hash(password)
+
+    def check_password(self, password: str) -> bool:
+        return check_password_hash(self.hashed_password, password)
+
+    def __repr__(self) -> str:
+        return f"<User {self.email}>"
