@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Миссия Колонизация Марса</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-top: 20px;
+        }
+        .subheader {
+            font-style: italic;
+            color: #666;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .header div:last-child {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        hr {
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div>
+            <h1>Миссия Колонизация Марса</h1>
+            <div class="subheader">И на Марсе будут яблони цвести!</div>
+        </div>
+        <div>Mars One</div>
+    </div>
+    <hr>
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>
