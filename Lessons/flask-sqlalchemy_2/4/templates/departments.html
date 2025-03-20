@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}List of Departments{% endblock %}
+{% block content %}
+<h1>List of Departments</h1>
+<a href="/add_department" class="btn btn-success">Add Department</a>
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Chief</th>
+            <th>Members</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for d in departments %}
+        <tr>
+            <td>{{ d.id }}</td>
+            <td>{{ d.title }}</td>
+            <td>{{ d.chief }}</td>
+            <td>{{ d.members }}</td>
+            <td>{{ d.email }}</td>
+            <td>
+                <a href="/edit_department/{{ d.id }}" class="btn btn-warning">Edit Department</a>
+                <a href="/delete_department/{{ d.id }}" class="btn btn-danger">Delete Department</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
