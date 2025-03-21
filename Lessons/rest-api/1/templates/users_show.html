@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+{% if user %}
+<h1>{{ user.name }} {{ user.surname }}</h1>
+<p>Hometown: {{ user.city_from }}</p>
+{% if map_url %}
+<img src="{{ map_url }}" alt="Map">
+{% else %}
+<p>No map data</p>
+{% endif %}
+{% else %}
+<h1>User not found</h1>
+{% endif %}
+{% endblock %}
