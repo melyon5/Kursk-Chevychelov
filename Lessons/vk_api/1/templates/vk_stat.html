@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Vk.com Statistics</title>
+    <style>
+        .pink-table {
+            background-color: #ffb7b7;
+            border-collapse: collapse;
+            margin: 10px;
+        }
+        .pink-table th, .pink-table td {
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+        }
+        .green-table {
+            background-color: #b7ffb7;
+            border-collapse: collapse;
+            margin: 10px;
+        }
+        .green-table th, .green-table td {
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+        }
+        h1, h2 {
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vk.com Statistics</h1>
+
+    <h2>Activities</h2>
+    <table class="pink-table">
+        <tr>
+            <th>likes</th>
+            <th>comments</th>
+            <th>subscribed</th>
+        </tr>
+        <tr>
+            <td>{{ activity_sum.likes }}</td>
+            <td>{{ activity_sum.comments }}</td>
+            <td>{{ activity_sum.subscribed }}</td>
+        </tr>
+    </table>
+
+    <h2>Ages</h2>
+    <table class="green-table">
+        <tr>
+            <th>Age Range</th>
+            <th>Count</th>
+        </tr>
+        {% for age_range, count in ages_sum.items() %}
+        <tr>
+            <td>{{ age_range }}</td>
+            <td>{{ count }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Cities</h2>
+    <table class="pink-table">
+        <tr>
+            <th>City</th>
+            <th>Count</th>
+        </tr>
+        {% for city, count in cities_sum.items() %}
+        <tr>
+            <td>{{ city }}</td>
+            <td>{{ count }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
